@@ -16,6 +16,7 @@
     <PublishSingleFile>true</PublishSingleFile>
     <PublishReadyToRun>true</PublishReadyToRun>
     <PublishTrimmed>false</PublishTrimmed>
+	<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <ErrorReport>none</ErrorReport>
     <Copyright>GNU AFFERO GENERAL PUBLIC LICENSE Version 3</Copyright>
     <ApplicationManifest>app.manifest</ApplicationManifest>
