@@ -1,0 +1,34 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build outputs
+**/[Bb]in/
+**/[Oo]bj/
+**/[Dd]eployment/
+**/[Bb]uild/
+**/[Ll]og/
+**/[Tt]estResults/
+*.nupkg
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Publish outputs
+**/[Dd]ist/
+**/[Aa]rtifacts/
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# Others
+*.cache
+*.pdb
+*.snupkg
