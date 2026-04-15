@@ -67,10 +67,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\Smart_Stay_Awake_3_icon.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+	<None Update="Assets\Smart_Stay_Awake_3_icon.png">
+	   <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	   <Link>Smart_Stay_Awake_3_icon.png</Link>
+	</None>
   </ItemGroup>
-
+	
 </Project>
