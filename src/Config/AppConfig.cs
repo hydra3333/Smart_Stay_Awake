@@ -44,9 +44,9 @@ namespace Smart_Stay_Awake_3
         public const bool FORCED_TRACE_DEFAULT = false;
 
         // Where/how trace logs are written when tracing is ON.
-        public const string LOG_FILE_BASENAME_PREFIX = "Smart_Stay_Awake_3_Trace_";
+        public const string LOG_FILE_BASENAME_PREFIX = "Smart_Stay_Awake_Trace_";
         public const string LOG_FILE_DATE_FORMAT = "yyyyMMdd"; // zero-padded y-M-d
-        public const string LOG_FALLBACK_SUBDIR = "Smart_Stay_Awake_3\\Logs"; // under %LocalAppData%
+        public const string LOG_FALLBACK_SUBDIR = "Smart_Stay_Awake\\Logs"; // under %LocalAppData%
 
         // ---- Auto-quit bounds (seconds) --------------------------------------
         public const int MIN_AUTO_QUIT_SECONDS = 10;                 // ≥ 10s
