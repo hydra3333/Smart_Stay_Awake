@@ -126,7 +126,7 @@ namespace Smart_Stay_Awake_3
 
             // Platform diagnostics (best-effort)
             string windowsBuild = Environment.OSVersion.VersionString; // e.g., "Microsoft Windows NT 10.0.26100.0"
-            string dotnetRuntimeVersion = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription; // ".NET 8.0.x"
+            string dotnetRuntimeVersion = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription; // ".NET 10.0.x"
 
             var state = new AppState(
                 appDisplayName: AppConfig.APP_DISPLAY_NAME,

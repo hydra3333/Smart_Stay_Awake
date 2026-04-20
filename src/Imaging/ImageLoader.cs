@@ -1,7 +1,7 @@
 ﻿// File: src/Smart_Stay_Awake_3/Imaging/ImageLoader.cs
 // Purpose: Load a Bitmap from a chosen source (CLI path now; fallback next).
 // Notes:
-//   * System.Drawing on .NET 8 is supported on Windows. We dispose streams promptly.
+//   * System.Drawing on .NET 10 is supported on Windows. We dispose streams promptly.
 //   * We return a *new Bitmap* to decouple from any underlying file handles (avoids file locks).
 
 using System;
