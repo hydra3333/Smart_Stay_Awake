@@ -26,6 +26,7 @@
     <NeutralLanguage>en-AU</NeutralLanguage>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <BaseOutputPath>deployment</BaseOutputPath>
+    <AssemblyName>Smart_Stay_Awake</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
