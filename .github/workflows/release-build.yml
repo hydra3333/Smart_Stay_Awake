@@ -9,8 +9,8 @@
 #   4) Supply-chain hardening: action pinning (commit SHAs required)
 #
 # OUTPUT:
-#   - ZIP:  Smart_Stay_Awake_3_v{tag}_x64_win10_win11.zip
-#   - TXT:  Smart_Stay_Awake_3_v{tag}_x64_win10_win11_SHA256.txt
+#   - ZIP:  Smart_Stay_Awake_v{tag}_x64_win10_win11.zip
+#   - TXT:  Smart_Stay_Awake_v{tag}_x64_win10_win11_SHA256.txt
 #
 # TRIGGER:
 #   - On publishing a GitHub Release (Releases → Draft → Publish)
@@ -137,7 +137,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           Set-StrictMode -Version Latest
-          & "$env:DOTNET_ROOT\dotnet.exe" restore ..\Smart_Stay_Awake_3.sln -r win-x64 --verbosity minimal
+          & "$env:DOTNET_ROOT\dotnet.exe" restore ..\Smart_Stay_Awake.sln -r win-x64 --verbosity minimal
 
       # ----------------------------------------------------------------------
       # 7) Publish (Release, Self-Contained, SingleFile, win-x64)
@@ -150,7 +150,7 @@ jobs:
           $ErrorActionPreference = 'Stop'
           Set-StrictMode -Version Latest
           $ProgressPreference = 'SilentlyContinue'
-          Write-Host "Publishing Smart_Stay_Awake_3 as SINGLE FILE (self-contained, win-x64)..." -ForegroundColor Yellow
+          Write-Host "Publishing Smart_Stay_Awake as SINGLE FILE (self-contained, win-x64)..." -ForegroundColor Yellow
 
           # Force specific output directory
           $publishPath = ".\publish-output"
@@ -160,7 +160,7 @@ jobs:
           # Changed to pubish the Projecvt rather than the solution to avoid '-o' errors
           # For your current goal (1 single project, deterministic single EXE + known companions),
           #   'project' publish is the least surprising and keeps Step 8 simple.
-          & "$env:DOTNET_ROOT\dotnet.exe" publish .\Smart_Stay_Awake_3.csproj `
+          & "$env:DOTNET_ROOT\dotnet.exe" publish .\Smart_Stay_Awake.csproj `
             -c Release `
             -r win-x64 `
             --self-contained true `
@@ -186,17 +186,17 @@ jobs:
             -o $publishPath `
             -v minimal
           if ($LASTEXITCODE -ne 0) {
-            Write-Host "❌ Smart_Stay_Awake_3 Publish FAILED!" -ForegroundColor Red
+            Write-Host "❌ Smart_Stay_Awake Publish FAILED!" -ForegroundColor Red
             exit 1
           }
       
           Write-Host ""
           Write-Host "═══════════════════════════════════════════════════════════" -ForegroundColor Cyan
-          Write-Host "  Smart_Stay_Awake_3 PUBLISH OUTPUT VERIFICATION" -ForegroundColor Cyan
+          Write-Host "  Smart_Stay_Awake PUBLISH OUTPUT VERIFICATION" -ForegroundColor Cyan
           Write-Host "═══════════════════════════════════════════════════════════" -ForegroundColor Cyan
       
           # Locate the EXE we expect in publish-output
-          $exePath = Join-Path $publishPath "Smart_Stay_Awake_3.exe"
+          $exePath = Join-Path $publishPath "Smart_Stay_Awake.exe"
           if (-not (Test-Path $exePath)) {
             Write-Host "❌ Expected EXE not found: $exePath" -ForegroundColor Red
             Write-Host "Files in Publish output:" -ForegroundColor Yellow
@@ -242,7 +242,7 @@ jobs:
           }
       
           Write-Host "═══════════════════════════════════════════════════════════" -ForegroundColor Cyan
-          Write-Host "✅ Published Smart_Stay_Awake_3 RELEASE build successfully" -ForegroundColor Green
+          Write-Host "✅ Published Smart_Stay_Awake RELEASE build successfully" -ForegroundColor Green
           Write-Host "═══════════════════════════════════════════════════════════" -ForegroundColor Cyan
           Write-Host ""
       
@@ -252,7 +252,7 @@ jobs:
       # ----------------------------------------------------------------------
       # 8) Discover/Verify publish output folder (explicit -o .\publish-output)
       #    With solution publishing + -o, the SDK creates per-project subfolders:
-      #      .\publish-output\<ProjectName>\Smart_Stay_Awake_3.exe
+      #      .\publish-output\<ProjectName>\Smart_Stay_Awake.exe
       #    We first check the expected path, then fall back to a safe search.
       # ----------------------------------------------------------------------
       - name: 🔍 Discover/Verify publish output folder
@@ -281,10 +281,10 @@ jobs:
             }
           }
 
-          $expectedExe = Join-Path $publishRoot "Smart_Stay_Awake_3.exe"
+          $expectedExe = Join-Path $publishRoot "Smart_Stay_Awake.exe"
           # Note: Because you used -o $publishPath in Step 7, the EXE should be directly 
           # in that folder. If the SDK nests it, the path usually becomes:
-          # $expectedExe = "$publishRoot/net10.0-windows/win-x64/Smart_Stay_Awake_3.exe"
+          # $expectedExe = "$publishRoot/net10.0-windows/win-x64/Smart_Stay_Awake.exe"
           if (Test-Path $expectedExe) {
             $BUILD_DIR = (Resolve-Path $publishRoot).Path
             $TFM_NAME  = ("explicit-output (project -o -> {0})" -f $publishRoot)
@@ -303,11 +303,11 @@ jobs:
               exit 1
             }
 
-            $exe = Get-ChildItem -Path $publishRoot -Recurse -File -Filter "Smart_Stay_Awake_3.exe" |
+            $exe = Get-ChildItem -Path $publishRoot -Recurse -File -Filter "Smart_Stay_Awake.exe" |
                    Select-Object -First 1
 
             if (-not $exe) {
-              Write-Host ("❌ Could not find Smart_Stay_Awake_3.exe under {0}" -f $publishRoot) -ForegroundColor Red
+              Write-Host ("❌ Could not find Smart_Stay_Awake.exe under {0}" -f $publishRoot) -ForegroundColor Red
               Show-PublishTree -root $publishRoot
               exit 1
             }
@@ -338,7 +338,7 @@ jobs:
           $buildDir = $env:BUILD_DIR
           if (-not (Test-Path $buildDir)) { throw "Publish folder not found: $buildDir" }
 
-          $exePath = Join-Path $buildDir "Smart_Stay_Awake_3.exe"
+          $exePath = Join-Path $buildDir "Smart_Stay_Awake.exe"
           if (-not (Test-Path $exePath)) { throw "Executable not found: $exePath" }
 
           # Surface what else is in publish (there can be support files)
@@ -353,7 +353,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           Set-StrictMode -Version Latest
-          $iconPath = ".\Assets\Smart_Stay_Awake_3_icon.png"
+          $iconPath = ".\Assets\Smart_Stay_Awake_icon.png"
           if (-not (Test-Path $iconPath)) { throw "Icon missing: $iconPath" }
           Write-Host "Icon OK: $iconPath"
 
@@ -382,12 +382,12 @@ jobs:
           New-Item -ItemType Directory -Force -Path $staging | Out-Null
 
           # Required trio
-          Copy-Item (Join-Path $env:BUILD_DIR "Smart_Stay_Awake_3.exe") (Join-Path $staging "Smart_Stay_Awake_3.exe") -Force
-          Copy-Item ".\Assets\Smart_Stay_Awake_3_icon.png" (Join-Path $staging "Smart_Stay_Awake_3_icon.png") -Force
+          Copy-Item (Join-Path $env:BUILD_DIR "Smart_Stay_Awake.exe") (Join-Path $staging "Smart_Stay_Awake.exe") -Force
+          Copy-Item ".\Assets\Smart_Stay_Awake_icon.png" (Join-Path $staging "Smart_Stay_Awake_icon.png") -Force
           Copy-Item ".\LICENSE" (Join-Path $staging "LICENSE") -Force
 
           # Companions (if any) — everything else from publish folder EXCEPT the main EXE
-          $companions = Get-ChildItem $env:BUILD_DIR -File | Where-Object { $_.Name -ne "Smart_Stay_Awake_3.exe" }
+          $companions = Get-ChildItem $env:BUILD_DIR -File | Where-Object { $_.Name -ne "Smart_Stay_Awake.exe" }
           foreach ($c in $companions) {
             Copy-Item $c.FullName (Join-Path $staging $c.Name) -Force
           }
@@ -396,7 +396,7 @@ jobs:
           Write-Host "Staged files:" -ForegroundColor Cyan
           Get-ChildItem $staging -File | ForEach-Object { Write-Host " - $($_.Name)" }
 
-          $extra = @( Get-ChildItem $staging -File | Where-Object { $_.Name -notin @("Smart_Stay_Awake_3.exe","Smart_Stay_Awake_3_icon.png","LICENSE") } )
+          $extra = @( Get-ChildItem $staging -File | Where-Object { $_.Name -notin @("Smart_Stay_Awake.exe","Smart_Stay_Awake_icon.png","LICENSE") } )
           if ($extra.Count -gt 0) {
             #Write-Host "Companions included:" -ForegroundColor Yellow
             Write-Host "Companions included ($($extra.Count) files):" -ForegroundColor Yellow
@@ -414,7 +414,7 @@ jobs:
           }
 
           # Final sanity: required trio must exist
-          $required = @("Smart_Stay_Awake_3.exe","Smart_Stay_Awake_3_icon.png","LICENSE")
+          $required = @("Smart_Stay_Awake.exe","Smart_Stay_Awake_icon.png","LICENSE")
           foreach ($req in $required) {
             if (-not (Test-Path (Join-Path $staging $req))) { throw "Required file missing in staging: $req" }
           }
@@ -429,7 +429,7 @@ jobs:
           $ProgressPreference = 'SilentlyContinue'
 
           $version     = "${{ github.ref_name }}"
-          $zipFileName = "Smart_Stay_Awake_3_x64_dotNET10_Win10_Win11_${version}.zip"
+          $zipFileName = "Smart_Stay_Awake_x64_dotNET10_Win10_Win11_${version}.zip"
           Compress-Archive -Path ".\release-staging\*" -DestinationPath $zipFileName -CompressionLevel Optimal -Force
           if (-not (Test-Path $zipFileName)) { throw "ZIP not created: $zipFileName" }
           $sz = (Get-Item $zipFileName).Length
@@ -451,7 +451,7 @@ jobs:
           $names = ($zip.Entries | ForEach-Object { $_.Name }) | Sort-Object
           $zip.Dispose()
 
-          $required = @('Smart_Stay_Awake_3.exe','Smart_Stay_Awake_3_icon.png','LICENSE')
+          $required = @('Smart_Stay_Awake.exe','Smart_Stay_Awake_icon.png','LICENSE')
           foreach ($req in $required) {
             if ($names -notcontains $req) {
               Write-Host "ZIP missing required file: $req" -ForegroundColor Red
@@ -522,7 +522,7 @@ jobs:
 
           # Did we include companions?
           $staging = ".\release-staging"
-          $extra = @( Get-ChildItem $staging -File | Where-Object { $_.Name -notin @("Smart_Stay_Awake_3.exe","Smart_Stay_Awake_3_icon.png","LICENSE") } )
+          $extra = @( Get-ChildItem $staging -File | Where-Object { $_.Name -notin @("Smart_Stay_Awake.exe","Smart_Stay_Awake_icon.png","LICENSE") } )
           # Build companion summary with count
           $companionSummary = if ($extra.Count -gt 0) {
               "$($extra.Count) file(s): $($extra.Name -join ', ')"
