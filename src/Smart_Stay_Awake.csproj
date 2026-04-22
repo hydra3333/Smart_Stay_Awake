@@ -42,7 +42,15 @@
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+	<PropertyGroup>
+		<NoWarn>$(NoWarn);IL2104;IL3000</NoWarn>
+		<_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
+	</PropertyGroup>
+	<ItemGroup>
+		<IlcArg Include="--nowarn:IL3053" />
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
     <Optimize>False</Optimize>
