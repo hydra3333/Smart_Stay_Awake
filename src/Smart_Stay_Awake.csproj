@@ -24,7 +24,7 @@
 	<PublishAot>true</PublishAot>
 	<IsAotCompatible>true</IsAotCompatible>
 	<EnableAotAnalyzer>true</EnableAotAnalyzer>
-	<_AllowWindowsFormsWithTrim>true</_AllowWindowsFormsWithTrim>
+	<_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
 	<PublishTrimmed>true</PublishTrimmed>
 	<TrimMode>link</TrimMode>
 	<SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
